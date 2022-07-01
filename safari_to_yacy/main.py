@@ -6,7 +6,8 @@ window of Safari and send it to be indexed in the
 Yacy search engine.
 """
 
-from subprocess import Popen, PIPE
+from subprocess import PIPE
+import subprocess
 from pydantic import BaseSettings
 import requests
 from requests.auth import HTTPDigestAuth
@@ -39,7 +40,7 @@ def generate_search_string(
 def get_safari_url() -> str:
     """Get URL of current tab in Safari."""
     cmd = "osascript -e 'tell application \"Safari\" to URL of document 1'"
-    pipe = Popen(cmd, shell=True, stdout=PIPE).stdout
+    pipe = subprocess.Popen(cmd, shell=True, stdout=PIPE).stdout
     url = pipe.readlines()[0].decode("UTF-8")  # type: ignore
     return url
 
